@@ -1,7 +1,4 @@
-/.phpunit.cache
 /node_modules
-/public/build
-/public/hot
 /public/storage
 /storage/*.key
 /vendor
@@ -14,6 +11,6 @@ Homestead.yaml
 auth.json
 npm-debug.log
 yarn-error.log
-/.fleet
 /.idea
 /.vscode
+/.vagrant
