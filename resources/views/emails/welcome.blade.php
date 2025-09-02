@@ -10,5 +10,6 @@ Back To Dashboard !!!!
 This Mail Is For Kavindu Karunathilaka's weblook Assigment !
 
 Thanks,<br>
+Kavindu Karunathilaka<br>
 {{ config('app.name') }}
 @endcomponent
