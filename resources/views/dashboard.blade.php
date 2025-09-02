@@ -13,7 +13,7 @@
 
                     <p><strong>Name:</strong> {{ Auth::user()->name }}</p>
                     <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
-                    <p><strong>Joined:</strong> {{ Auth::user()->created_at->format('d M Y') }}</p>
+                    
                 </div>
             </div>
         </div>

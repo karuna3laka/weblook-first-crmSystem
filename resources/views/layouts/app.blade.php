@@ -9,6 +9,36 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
+        .widget-btn {
+            background: linear-gradient(90deg, #000, #222 80%);
+            color: #fff;
+            font-size: 1.25rem;
+            font-weight: 600;
+            padding: 1.25rem 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 24px 0 rgba(0,0,0,0.18);
+            transition: background 0.3s, box-shadow 0.3s;
+            border: none;
+            outline: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .widget-btn:hover, .widget-btn:focus {
+            background: linear-gradient(90deg, #111, #333 80%);
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.28);
+            color: #00ffae;
+            text-decoration: none;
+        }
+        .widget-btn svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            fill: #fff;
+            transition: fill 0.3s;
+        }
+        .widget-btn:hover svg {
+            fill: #00ffae;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900">
@@ -20,16 +50,15 @@
                 <div>
                     <a href="{{ route('dashboard') }}" class="text-xl font-semibold text-gray-900 tracking-tight">
                         Weblook CRM -Karun3laka
+                    </a>
                 </div>
-
-                <a href="{{ route('customers.index') }}" class="text-gray-700 hover:text-black transition">
-                    Customers
-                </a>
-
 
                 <div class="flex space-x-6 items-center">
                     <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-black transition">
                         Dashboard
+                    </a>
+                    <a href="{{ route('customers.index') }}" class="text-green-4700 hover:text-black transition">
+                        Customers
                     </a>
                     <a href="{{ route('profile') }}" class="text-gray-700 hover:text-black transition">
                         Profile
@@ -57,6 +86,20 @@
                 <p class="text-lg text-gray-500">
                     A clean and modern way to manage your customers with elegance.
                 </p>
+
+                <!-- Widgety Customers Button -->
+                <div class="mt-8">
+                    <a href="{{ route('customers.index') }}" class="widget-btn" aria-label="Go to Customers">
+                        <!-- Customer icon SVG -->
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+                        </svg>
+                        Customers
+                    </a>
+                </div>
+
+                
+                
 
                 <!-- Yielded Content -->
                 <div class="mt-12">

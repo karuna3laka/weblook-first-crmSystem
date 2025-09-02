@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-7xl mx-auto bg-white rounded-xl shadow p-6">
+<div class="max-w-7xl mx-auto bg-white rounded-xl shadow p-20 sm:p-6 lg:p-8">
 
     <h1 class="text-2xl font-bold mb-6 text-gray-900">Customers</h1>
 
@@ -59,17 +59,21 @@
             </tr>
 
             <!-- Edit Modal -->
-            <div id="edit-modal-{{ $customer->id }}" class="modal fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg transform scale-95 transition-transform duration-300">
+            <div id="edit-modal-{{ $customer->id }}" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+                <!-- Overlay -->
+                <div class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300" onclick="closeModal('edit-modal-{{ $customer->id }}')"></div>
+
+                <!-- Modal Content -->
+                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg transform scale-95 opacity-0 transition-all duration-300 z-10" onclick="event.stopPropagation()">
                     <h2 class="text-xl font-bold mb-4">Edit Customer</h2>
                     <form method="POST" action="{{ route('customers.update', $customer->id) }}" class="space-y-4">
                         @csrf
                         @method('PUT')
-                        <input type="text" name="name" value="{{ $customer->name }}" class="w-full border p-2 rounded" required>
-                        <input type="email" name="email" value="{{ $customer->email }}" class="w-full border p-2 rounded" required>
-                        <input type="text" name="phone" value="{{ $customer->phone }}" class="w-full border p-2 rounded">
-                        <input type="text" name="company" value="{{ $customer->company }}" class="w-full border p-2 rounded">
-                        <input type="text" name="address" value="{{ $customer->address }}" class="w-full border p-2 rounded">
+                        <input type="text" name="name" value="{{ $customer->name }}" placeholder="Name" class="w-full border p-2 rounded" required>
+                        <input type="email" name="email" value="{{ $customer->email }}" placeholder="Email" class="w-full border p-2 rounded" required>
+                        <input type="text" name="phone" value="{{ $customer->phone }}" placeholder="Phone (Optional)" class="w-full border p-2 rounded">
+                        <input type="text" name="company" value="{{ $customer->company }}" placeholder="Company (Optional)" class="w-full border p-2 rounded">
+                        <input type="text" name="address" value="{{ $customer->address }}" placeholder="Address (Optional)" class="w-full border p-2 rounded">
                         <select name="status" class="w-full border p-2 rounded">
                             <option value="lead" {{ $customer->status=='lead'?'selected':'' }}>Lead</option>
                             <option value="active" {{ $customer->status=='active'?'selected':'' }}>Active</option>
@@ -89,8 +93,12 @@
 </div>
 
 <!-- Create Modal -->
-<div id="create-modal" class="modal fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg transform scale-95 transition-transform duration-300">
+<div id="create-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300" onclick="closeModal('create-modal')"></div>
+
+    <!-- Modal Content -->
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg transform scale-95 opacity-0 transition-all duration-300 z-10" onclick="event.stopPropagation()">
         <h2 class="text-xl font-bold mb-4">Add Customer</h2>
         <form method="POST" action="{{ route('customers.store') }}" class="space-y-4">
             @csrf
@@ -107,25 +115,24 @@
     </div>
 </div>
 
-<!-- Modal JS with iOS-style fade and zoom -->
+<!-- JS for Modals -->
 <script>
-    function openModal(id) {
-        const modal = document.getElementById(id);
-        modal.classList.remove('opacity-0', 'pointer-events-none');
-        const inner = modal.querySelector('div');
-        inner.classList.remove('scale-95');
-        inner.classList.add('scale-100');
-    }
+function openModal(id) {
+    const modal = document.getElementById(id);
+    const content = modal.querySelector('div.z-10');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+    }, 10);
+}
 
-    function closeModal(id) {
-        const modal = document.getElementById(id);
-        const inner = modal.querySelector('div');
-        inner.classList.remove('scale-100');
-        inner.classList.add('scale-95');
-        setTimeout(() => {
-            modal.classList.add('opacity-0', 'pointer-events-none');
-        }, 300);
-    }
+function closeModal(id) {
+    const modal = document.getElementById(id);
+    const content = modal.querySelector('div.z-10');
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => modal.classList.add('hidden'), 300);
+}
 </script>
-
 @endsection
