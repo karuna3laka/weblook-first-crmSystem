@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
+//for the welcome email
+
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+
+
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -45,6 +52,9 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        // Send welcome email
+        Mail::to($user->email)->send(new WelcomeMail($user));
 
         return redirect(RouteServiceProvider::HOME);
     }
