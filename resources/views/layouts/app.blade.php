@@ -3,28 +3,42 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'CRM System') }}</title>
+    <title>{{ config('app.name', 'Weblook CRM System') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+    </style>
 </head>
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+<body class="bg-white text-gray-900">
+    <div class="min-h-screen flex flex-col">
+
         <!-- Navbar -->
-        <nav class="bg-white dark:bg-gray-800 shadow">
+        <nav class="bg-white border-b border-gray-200 shadow-sm fixed w-full z-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
                 <div>
-                    <a href="{{ route('dashboard') }}" class="text-lg font-bold text-gray-700 dark:text-gray-200">
-                        CRM System
-                    </a>
+                    <a href="{{ route('dashboard') }}" class="text-xl font-semibold text-gray-900 tracking-tight">
+                        Weblook CRM -Karun3laka
                 </div>
 
-                <div class="flex space-x-6">
-                    <a href="{{ route('dashboard') }}" class="text-gray-700 dark:text-gray-200">Dashboard</a>
-                    <a href="{{ route('profile') }}" class="text-gray-700 dark:text-gray-200">Profile</a>
+                <a href="{{ route('customers.index') }}" class="text-gray-700 hover:text-black transition">
+                    Customers
+                </a>
+
+
+                <div class="flex space-x-6 items-center">
+                    <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-black transition">
+                        Dashboard
+                    </a>
+                    <a href="{{ route('profile') }}" class="text-gray-700 hover:text-black transition">
+                        Profile
+                    </a>
 
                     <!-- Logout -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="text-red-600 hover:text-red-800">
+                        <button type="submit" class="bg-black hover:bg-red-900 text-white px-4 py-2 rounded-xl transition">
                             Logout
                         </button>
                     </form>
@@ -32,9 +46,23 @@
             </div>
         </nav>
 
-        <!-- Page Content -->
-        <main class="p-6">
-            @yield('content')
+        <!-- Main Content -->
+        <main class="flex-1 pt-24 px-6">
+            <div class="max-w-3xl mx-auto text-center">
+
+                <!-- Welcome Section -->
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                    Welcome to <span class="text-black">Weblook CRM System</span>
+                </h1>
+                <p class="text-lg text-gray-500">
+                    A clean and modern way to manage your customers with elegance.
+                </p>
+
+                <!-- Yielded Content -->
+                <div class="mt-12">
+                    @yield('content')
+                </div>
+            </div>
         </main>
     </div>
 </body>

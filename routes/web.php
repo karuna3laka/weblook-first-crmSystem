@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,5 +27,11 @@ Route::get('/dashboard', function () {
 Route::get('/profile', function () {
     return view('profile');
 })->middleware(['auth'])->name('profile');
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('customers', CustomerController::class);
+    Route::patch('customers/{customer}/status', [CustomerController::class, 'status'])
+        ->name('customers.status');
+});
 
 require __DIR__.'/auth.php';
