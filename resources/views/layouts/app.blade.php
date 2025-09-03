@@ -57,21 +57,25 @@
                     <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-black transition">
                         Dashboard
                     </a>
-                    <a href="{{ route('customers.index') }}" class="text-green-4700 hover:text-black transition">
+                    <a href="{{ route('customers.index') }}" class="text-gray-700 hover:text-black transition">
                         Customers
+                    </a>
+                    <a href="{{ route('invoices.index') }}" class="text-gray-700 hover:text-black transition">
+                        Invoices
                     </a>
                     <a href="{{ route('profile') }}" class="text-gray-700 hover:text-black transition">
                         Profile
                     </a>
 
-                    <!-- Logout -->
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="bg-black hover:bg-red-900 text-white px-4 py-2 rounded-xl transition">
-                            Logout
-                        </button>
-                    </form>
-                </div>
+    <!-- Logout -->
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="bg-black hover:bg-red-900 text-white px-4 py-2 rounded-xl transition">
+            Logout
+        </button>
+    </form>
+</div>
+
             </div>
         </nav>
 
