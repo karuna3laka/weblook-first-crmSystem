@@ -26,11 +26,13 @@
                 <th class="px-4 py-2 text-left">Actions</th>
             </tr>
         </thead>
+        
         <tbody>
             @forelse($invoices as $invoice)
                 <tr>
                     <td class="px-4 py-2">{{ $invoice->invoice_number }}</td>
-                    <td class="px-4 py-2">{{ $invoice->customer->name }}</td>
+                    <!-- // Added null check for customer -->
+                   <td class="px-4 py-2">{{ $invoice->customer?->name ?? 'Customer Null' }}</td> 
                     <td class="px-4 py-2">${{ number_format($invoice->amount, 2) }}</td>
                     <td class="px-4 py-2">{{ ucfirst($invoice->status) }}</td>
                     <td class="px-4 py-2">{{ $invoice->due_date }}</td>
@@ -40,6 +42,13 @@
                             @csrf @method('DELETE')
                             <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Delete this invoice?')">
                                 Delete
+                            </button>
+                        </form>
+                        |
+                        <form action="{{ route('invoices.send', $invoice) }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="text-green-600 hover:underline" onclick="return confirm('Send this invoice?')">
+                                Send
                             </button>
                         </form>
                     </td>
@@ -55,3 +64,5 @@
     <div class="mt-4">{{ $invoices->links() }}</div>
 </div>
 @endsection
+
+

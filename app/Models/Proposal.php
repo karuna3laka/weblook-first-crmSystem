@@ -5,14 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Invoice extends Model
+class Proposal extends Model
 {
     use HasFactory;
 
+    // Only the fields that exist in your proposals table
     protected $fillable = [
-    'customer_id','invoice_number','amount','status','due_date',
-    'stripe_session_id','stripe_payment_intent_id'
-];
+        'customer_id',
+        'title',
+        'description',
+        'amount',
+        'status',
+    ];
 
     public function customer()
     {

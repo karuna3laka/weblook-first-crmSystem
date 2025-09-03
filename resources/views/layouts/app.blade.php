@@ -49,7 +49,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
                 <div>
                     <a href="{{ route('dashboard') }}" class="text-xl font-semibold text-gray-900 tracking-tight">
-                        Weblook CRM -Karun3laka
+                        Weblook CRM 
                     </a>
                 </div>
 
@@ -63,6 +63,10 @@
                     <a href="{{ route('invoices.index') }}" class="text-gray-700 hover:text-black transition">
                         Invoices
                     </a>
+                    <a href="{{ route('proposals.index') }}" class="text-gray-700 hover:text-black transition">
+                        Proposals
+                    </a>
+
                     <a href="{{ route('profile') }}" class="text-gray-700 hover:text-black transition">
                         Profile
                     </a>
@@ -85,25 +89,12 @@
 
                 <!-- Welcome Section -->
                 <h1 class="text-4xl font-bold text-gray-900 mb-4">
-                    Welcome to <span class="text-black">Weblook CRM System</span>
+                    <span class="text-black">Weblook CRM System</span>
                 </h1>
+                
                 <p class="text-lg text-gray-500">
                     A clean and modern way to manage your customers with elegance.
                 </p>
-
-                <!-- Widgety Customers Button -->
-                <div class="mt-8">
-                    <a href="{{ route('customers.index') }}" class="widget-btn" aria-label="Go to Customers">
-                        <!-- Customer icon SVG -->
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
-                        </svg>
-                        Customers
-                    </a>
-                </div>
-
-                
-                
 
                 <!-- Yielded Content -->
                 <div class="mt-12">

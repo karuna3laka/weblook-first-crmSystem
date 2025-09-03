@@ -6,6 +6,14 @@ use App\Models\Invoice;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
+use App\Mail\InvoiceMail;
+use Illuminate\Support\Facades\Mail;
+use Stripe\Stripe;
+use Stripe\Checkout\Session as CheckoutSession;
+use Stripe\StripeClient;
+
+
+
 class InvoiceController extends Controller
 {
     public function index()
@@ -64,4 +72,45 @@ class InvoiceController extends Controller
         $invoice->delete();
         return redirect()->route('invoices.index')->with('success', 'Invoice deleted successfully.');
     }
+
+    public function sendInvoice($id)
+{
+    $invoice = Invoice::with('customer')->findOrFail($id);
+
+    // Create Stripe Checkout session
+    $stripe = new StripeClient(env('STRIPE_SECRET'));
+    $session = $stripe->checkout->sessions->create([
+        'payment_method_types' => ['card'],
+        'line_items' => [[
+            'price_data' => [
+                'currency' => 'usd',
+                'product_data' => [
+                    'name' => 'Invoice #' . $invoice->invoice_number,
+                ],
+                'unit_amount' => $invoice->amount * 100,
+            ],
+            'quantity' => 1,
+        ]],
+        'mode' => 'payment',
+        'success_url' => route('invoices.success', $invoice->id),
+        'cancel_url' => route('invoices.index'),
+    ]);
+
+    $paymentUrl = $session->url;
+
+    // Send email
+    Mail::to($invoice->customer->email)->send(new InvoiceMail($invoice, $paymentUrl));
+
+    return back()->with('success', 'Invoice email sent successfully.');
+}
+
+
+public function paymentSuccess(Invoice $invoice)
+{
+    $invoice->update(['status' => 'paid']);
+    return redirect()->route('invoices.index')->with('success', 'Invoice paid successfully.');
+}
+
+
+
 }
