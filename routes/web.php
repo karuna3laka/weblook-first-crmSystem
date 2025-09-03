@@ -3,6 +3,7 @@
 use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ProposalController;
 
 
 Route::get('/', function () {
@@ -27,6 +28,10 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('invoices', InvoiceController::class);
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('proposals', ProposalController::class);
 });
 
 require __DIR__.'/auth.php';

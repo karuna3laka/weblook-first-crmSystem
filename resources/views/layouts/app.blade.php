@@ -63,6 +63,10 @@
                     <a href="{{ route('invoices.index') }}" class="text-gray-700 hover:text-black transition">
                         Invoices
                     </a>
+                    <a href="{{ route('proposals.index') }}" class="text-gray-700 hover:text-black transition">
+                        Proposals
+                    </a>
+
                     <a href="{{ route('profile') }}" class="text-gray-700 hover:text-black transition">
                         Profile
                     </a>
