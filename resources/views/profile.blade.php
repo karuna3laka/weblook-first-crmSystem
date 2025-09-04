@@ -10,7 +10,7 @@
     <div 
         class="max-w-lg w-full mx-auto"
         onclick="event.stopPropagation();" <!-- Prevent click inside card from closing -->
-    >
+    
         <div class="bg-white dark:bg-neutral-900 rounded-3xl shadow-2xl border border-gray-200/70 dark:border-gray-700/50 overflow-hidden backdrop-blur-xl">
             
             <!-- Top Section with Avatar -->
