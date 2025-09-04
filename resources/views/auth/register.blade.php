@@ -1,6 +1,4 @@
 <x-guest-layout>
-    <h1 class="text-2xl font-bold text-center mb-6">Create Account</h1>
-    <p class="text-sm text-gray-400 text-center mb-8">Sign up to get started with CRM</p>
 
     <form method="POST" action="{{ route('register') }}">
         @csrf

@@ -1,7 +1,5 @@
 <x-guest-layout>
-    <h1 class="text-2xl font-bold text-center mb-6">Welcome Back Again </h1>
-    <p class="text-sm text-gray-400 text-center mb-8">Login to your CRM account</p>
-
+    
     <!-- Session Status -->
     <x-auth-session-status class="mb-4 text-green-400" :status="session('status')" />
 
