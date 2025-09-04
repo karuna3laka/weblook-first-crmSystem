@@ -67,6 +67,11 @@
                         Proposals
                     </a>
 
+                    <a href="{{ route('transactions.index') }}" class="text-gray-700 hover:text-black transition">
+                         Transactions
+                    </a>
+
+
                     <a href="{{ route('profile') }}" class="text-gray-700 hover:text-black transition">
                         Profile
                     </a>

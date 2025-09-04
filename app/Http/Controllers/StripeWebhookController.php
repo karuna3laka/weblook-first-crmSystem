@@ -3,9 +3,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Invoice;
-use Stripe\Stripe;
 use Stripe\Webhook;
-use Stripe\Checkout\Session as CheckoutSession;
+use App\Models\Transaction;
 
 class StripeWebhookController extends Controller
 {
@@ -31,30 +30,36 @@ class StripeWebhookController extends Controller
         if ($event->type === 'checkout.session.completed') {
             $session = $event->data->object;
 
-            // Metadata should include invoice_id (we set it when creating session)
             $invoiceId = $session->metadata->invoice_id ?? null;
 
             if ($invoiceId) {
-                $invoice = Invoice::find($invoiceId);
+                $invoice = Invoice::with('customer')->find($invoiceId);
 
-                // Ensure we only update once and check payment status
                 if ($invoice && $invoice->status !== 'paid') {
-                    // session.payment_status should be 'paid' for successful card payment
-                    if (isset($session->payment_status) && $session->payment_status === 'paid') {
-                        $invoice->update([
-                            'status' => 'paid',
-                            'stripe_payment_intent_id' => $session->payment_intent ?? null,
-                        ]);
-                    } else {
-                        // Optionally fetch PaymentIntent to verify - extra safety
-                        // $pi = \Stripe\PaymentIntent::retrieve($session->payment_intent);
-                        // if ($pi->status === 'succeeded') { ... }
-                    }
+                    // Mark invoice paid
+                    $invoice->update([
+                        'status' => 'paid',
+                        'stripe_payment_intent_id' => $session->payment_intent ?? null,
+                        'stripe_session_id' => $session->id ?? null,
+                    ]);
+
+                    // Create a transaction row
+                    Transaction::updateOrCreate(
+                        ['payment_id' => $session->payment_intent ?? null],
+                        [
+                            'customer_id' => $invoice->customer_id,
+                            'invoice_id'  => $invoice->id,
+                            'session_id'  => $session->id ?? null,
+                            'amount'      => $invoice->amount,
+                            'currency'    => $session->currency ?? 'usd',
+                            'status'      => 'paid',
+                            'paid_at'     => now(),
+                        ]
+                    );
                 }
             }
         }
 
-        // Return 200 to acknowledge receipt of the event
-        return response('Webhook handled', 200);
+        return response()->json(['status' => 'success']);
     }
 }

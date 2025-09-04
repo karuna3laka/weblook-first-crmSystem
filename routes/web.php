@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProposalController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\StripeWebhookController;
 
 
@@ -45,6 +46,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('invoices', InvoiceController::class);
     Route::post('invoices/{invoice}/send', [InvoiceController::class, 'sendInvoice'])->name('invoices.send');
     Route::get('invoices/{invoice}/success', [InvoiceController::class, 'paymentSuccess'])->name('invoices.success');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/customers/{customer}/transactions', [TransactionController::class, 'byCustomer'])->name('customers.transactions');
 });
 
 // Stripe webhook route (outside auth middleware)
