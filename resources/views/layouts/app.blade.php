@@ -67,7 +67,7 @@
                         Proposals
                     </a>
 
-                    <a href="{{ route('transactions.index') }}" class="text-gray-700 hover:text-black transition">
+                    <a href="{{ route('transactions.index') }}" class="text-green-600 hover:text-black transition">
                          Transactions
                     </a>
 
