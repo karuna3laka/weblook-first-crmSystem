@@ -94,6 +94,9 @@ class InvoiceController extends Controller
         'mode' => 'payment',
         'success_url' => route('invoices.success', $invoice->id),
         'cancel_url' => route('invoices.index'),
+        'metadata' => [
+            'invoice_id' => $invoice->id,
+        ],
     ]);
 
     $paymentUrl = $session->url;
